@@ -1,9 +1,3 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  name: MyString
-  email: MyString
-
-two:
-  name: MyString
-  email: MyString
+# empty until chapter8
+# cf. Listing 6.31: An empty fixtures file.GREEN
