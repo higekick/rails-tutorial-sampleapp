@@ -27,6 +27,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_template 'users/show'
     assert_not flash[:success].empty?
     assert_not flash[:error]
+    assert is_logged_in?
   end
 
 end
