@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    attr_accessor :remember_token
     before_save { self.email = email.downcase }
 
     validates :name, presence: true, length: {maximum: 50}
@@ -16,5 +17,25 @@ class User < ApplicationRecord
       cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                     BCrypt::Engine.cost
       BCrypt::Password.create(string, cost: cost)
+    end
+
+    # Returns a randome token
+    def User.new_token
+        SecureRandom.urlsafe_base64
+    end
+
+    # Remembers a user in the database for use in persistent sessions.
+    def remember
+        self.remember_token = User.new_token # generate token and restore
+        update_attribute(:remember_digest, User.digest(remember_token)) # update digest in database
+    end
+
+    def authenticated?(remember_token)
+        return false if remember_digest.nil? # this is important for multi browser logout in first and close, reopen in another
+        BCrypt::Password.new(remember_digest).is_password?(remember_token) # confirm login token
+    end
+
+    def forget
+        update_attribute(:remember_digest, nil)
     end
 end
