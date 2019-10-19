@@ -28,6 +28,7 @@ class PasswordResetsController < ApplicationController
       render 'edit'
     elsif @user.update_attributes(user_params)          # Case (4)
       log_in @user
+      @user.update_attribute(:reset_digest, nil) # for more secure protection, after success reset, clear digest
       flash[:success] = "Password has been reset."
       redirect_to @user
     else
