@@ -75,6 +75,10 @@ class User < ApplicationRecord
       # Password reset sent earlier than two hours ago.
     end
 
+    def feed
+      Micropost.where("user_id = ?", id)
+    end
+
     private
         # Converts email to all lower-case.
         def downcase_email
