@@ -38,7 +38,8 @@ end
 
 group :production do
   gem 'pg', '0.20.0'
-  gem 'fog'
+  gem 'ovirt-engine-sdk'
+  gem 'fog', '2.2.0'
   gem 'fog-aws'
 end
 
