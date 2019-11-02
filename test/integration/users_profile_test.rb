@@ -19,4 +19,23 @@ class UsersProfileTest < ActionDispatch::IntegrationTest
       assert_match micropost.content, response.body
     end
   end
+
+  test "home page stats test" do
+    log_in_as(@user)
+    archer = users(:archer)
+    lana = users(:lana)
+    # # follow some user
+    # @user.follow(archer)
+    # @user.follow(lana)
+    # # followed by some user
+    # archer.follow(@user)
+    # lana.follow(@user)
+    get root_path
+    assert_template 'static_pages/home'
+    assert_template 'static_pages/_loggedin'
+    assert_select 'a[href=?]', "/users/#{@user.id}/following"
+    assert_select '#following', text: "#{@user.following.count}"
+    assert_select 'a[href=?]', "/users/#{@user.id}/followers"
+    assert_select '#followers', text: "#{@user.followers.count}"
+  end
 end
