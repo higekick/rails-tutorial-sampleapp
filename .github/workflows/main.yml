@@ -44,7 +44,7 @@ jobs:
             commit_date=`git show -s $branch --format='%cd' --date=format:'%Y%m%d'` 
             echo $commit_date
             if [[ $commit_date -le $expired_date ]]; then
-              short_branch=`sed -i 's/origin\///g' $branch`
+              short_branch=`echo $branch | sed 's/origin\///g'`
               git push origin --delete $short_branch 
             fi 
           done
