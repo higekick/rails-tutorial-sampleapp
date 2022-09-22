@@ -33,7 +33,7 @@ jobs:
       - name: Delete old branch saving snapshots
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EXPIRED_TERM: 3m # first letter of year, month, week and day
+          EXPIRED_TERM: 12w # first letter of year, month, week and day
           REMOTE_REPO: origin
           TARGET_BRANCH_PREFIX: dependabot
           DATE_FORMAT: '%Y%m%d'
