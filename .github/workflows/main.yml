@@ -37,13 +37,14 @@ jobs:
           # get 2w ago from now 
           expired_date=`date -v-1y '+%Y%m%d'` 
           echo $expired_date
-          git branch | grep "[^* ]+" -Eo | grep "^dependabot.+" -Eo | \
-          while read branch; do
-            echo $branch 
-            commit_date=`git show -s $branch --format='%cd' --date=format:'%Y%m%d'` 
-            echo $commit_date
-            if [[ $commit_date -le $expired_date ]]; then 
-              git branch -D $branch 
-            fi 
-          done
+          git branch 
+          # | grep "[^* ]+" -Eo | grep "^dependabot.+" -Eo | \
+          # while read branch; do
+          #  echo $branch 
+          #  commit_date=`git show -s $branch --format='%cd' --date=format:'%Y%m%d'` 
+          #  echo $commit_date
+          #  if [[ $commit_date -le $expired_date ]]; then 
+          #    git branch -D $branch 
+          #  fi 
+          # done
         shell: bash
