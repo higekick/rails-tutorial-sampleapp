@@ -37,6 +37,7 @@ jobs:
           # get 2w ago from now 
           expired_date=`date -v-1y '+%Y%m%d'` 
           echo $expired_date
+          git fetch --all
           git branch 
           # | grep "[^* ]+" -Eo | grep "^dependabot.+" -Eo | \
           # while read branch; do
