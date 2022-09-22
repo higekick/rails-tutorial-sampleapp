@@ -46,7 +46,7 @@ jobs:
             commit_date=`git show -s $branch --format='%cd' --date=format:'%Y%m%d'` 
             echo $commit_date
             if [[ $commit_date -le $expired_date ]]; then
-              short_branch=`echo $branch | sed 's/${REMOTE_REPO}\///g'`
+              short_branch=`echo $branch | sed "s/${REMOTE_REPO}\///g"`
               git push ${REMOTE_REPO} --delete $short_branch 
             fi 
           done
