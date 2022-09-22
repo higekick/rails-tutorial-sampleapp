@@ -33,18 +33,20 @@ jobs:
       - name: Run a multi-line script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EXPIRED_TERM: 5m
+          REMOTE_REPO: origin 
         run: |
           # get 2w ago from now 
-          expired_date=`date -v-1y '+%Y%m%d'` 
+          expired_date=`date -v-$EXPIRED_TERM '+%Y%m%d'` 
           echo $expired_date
           git fetch --all
-          git branch -r | grep "[^* ]+" -Eo | grep "origin/dependabot.+" -Eo | \
+          git branch -r | grep "[^* ]+" -Eo | grep "${REMOTE_REPO}/dependabot.+" -Eo | \
           while read branch; do
             echo $branch 
             commit_date=`git show -s $branch --format='%cd' --date=format:'%Y%m%d'` 
             echo $commit_date
             if [[ $commit_date -le $expired_date ]]; then
-              short_branch=`echo $branch | sed 's/origin\///g'`
-              git push origin --delete $short_branch 
+              short_branch=`echo $branch | sed 's/${REMOTE_REPO}\///g'`
+              git push ${REMOTE_REPO} --delete $short_branch 
             fi 
           done
